@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Device.Location;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Phone.Maps.Controls;
+﻿using System.Device.Location;
 
 // Provie an alias for the Map data type so that we can reference it as BingMap within our code
 using BingMap = Microsoft.Phone.Maps.Controls.Map;
