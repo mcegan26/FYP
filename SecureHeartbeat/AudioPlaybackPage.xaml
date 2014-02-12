@@ -1,0 +1,75 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="SecureHeartbeat.AudioPlaybackPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:viewModels="clr-namespace:SecureHeartbeat.ViewModels"
+    d:DataContext="{d:DesignInstance viewModels:AudioPlaybackViewModel}"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <!--  d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}" -->
+<!--      d:DataContext="{d:DesignInstance viewModels:AudioPlaybackViewModel}"-->
+
+        <!-- SampleData/MainViewModelSampleData.xaml  -->
+    <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="SlateGray">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <!--Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"-->
+
+        <Image Source="Assets/SecureHeartbeat1.jpg" VerticalAlignment="Top" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" Stretch="Fill"/>
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="MainMenuStackPanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="{Binding Path=LocalizedResources.SoundPageTitle, Source={StaticResource LocalizedStrings}}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel contains LongListSelector and LongListSelector ItemTemplate. Place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+<!--
+            <phone:LongListSelector x:Name="MainLongListSelector" Margin="10,0,-22,0" ItemsSource="{Binding audioaudioPlaybackModel}">
+                <phone:LongListSelector.ItemTemplate>
+                    <DataTemplate>-->
+            <StackPanel Margin="0,0,0,17" Orientation="Vertical">
+                <ToggleButton x:Name="RecordButton"
+                                Content="Record" 
+                                Background="{StaticResource PhoneBackgroundBrush}" 
+                                MinHeight="110" Width="450" Padding="20" 
+                                FontFamily="Lucida"
+                                Checked="RecordButtonStart"
+                                Unchecked="RecordButtonStop"/>
+                <!-- Click="PlaySoundFile" -->
+                <Button x:Name="PlayButton"
+                        Content="Playback"
+                        IsEnabled="False"
+                        Background="{StaticResource PhoneBackgroundBrush}" 
+                        MinHeight="110" Width="450" 
+                        Padding="20" FontFamily="Lucida"
+                        Click="PlaySoundFile"/>
+                <Button x:Name="SaveButton"
+                        IsEnabled="False"
+                        Content="Save"
+                        Background="{StaticResource PhoneBackgroundBrush}"
+                        MinHeight="110" Width="450" 
+                        Padding="20" FontFamily="Lucida"/>
+            </StackPanel>
+
+            <MediaElement Name="SoundRecordingPlayer" AutoPlay="False"/>
+        </Grid>
+
+    </Grid>
+
+</phone:PhoneApplicationPage>

@@ -1,0 +1,13 @@
+﻿<vm:AudioPlaybackViewModel
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:SecureHeartbeat.ViewModels"
+    SampleProperty="Sample Text Property Value">
+
+<!--
+    <vm:AudioPlaybackViewModel.audioPlaybackModel ???>
+        <vm:AudioPlaybackModel ID="0"/>
+    </vm:AudioPlaybackViewModel.audioPlaybackModel>
+-->
+
+</vm:AudioPlaybackViewModel>
