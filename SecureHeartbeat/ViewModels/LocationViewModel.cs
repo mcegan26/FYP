@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Data.Linq;
 using System.IO.IsolatedStorage;
 using System.Windows;
-using Microsoft.Phone.Maps.Controls;
 using SecureHeartbeat.Core.Impl;
 using SecureHeartbeat.Maps;
 using SecureHeartbeat.Models;

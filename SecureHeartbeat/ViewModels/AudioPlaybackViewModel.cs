@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using Microsoft.Phone.Reactive;
 using SecureHeartbeat.Commands;
 using SecureHeartbeat.Core.Impl;
 using SecureHeartbeat.Resources;

@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Net;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using Windows.Phone.Media.Capture;
 using Coding4Fun.Toolkit.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SecureHeartbeat.Models;
 using SecureHeartbeat.Resources;
-using SecureHeartbeat.ViewModels;
 
 namespace SecureHeartbeat
 {

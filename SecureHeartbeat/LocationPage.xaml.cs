@@ -1,13 +1,6 @@
-﻿using System;
-using System.Device.Location;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Navigation;
-using Windows.Devices.Geolocation;
+﻿using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
-using System.IO.IsolatedStorage;
 using Microsoft.Phone.Maps.Controls;
-using SecureHeartbeat.Core;
 using SecureHeartbeat.Core.Interfaces;
 using SecureHeartbeat.Maps;
 using SecureHeartbeat.ViewModels;

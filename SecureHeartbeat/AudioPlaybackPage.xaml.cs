@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Navigation;
 using Coding4Fun.Toolkit.Audio;
 using Coding4Fun.Toolkit.Audio.Helpers;
-using Microsoft.Phone.BackgroundAudio;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 using SecureHeartbeat.Commands;
 
 namespace SecureHeartbeat
