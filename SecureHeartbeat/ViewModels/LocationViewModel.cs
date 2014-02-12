@@ -13,6 +13,9 @@ using SecureHeartbeat.Commands;
 
 namespace SecureHeartbeat.ViewModels
 {
+    /// <summary>
+    /// Location View Model
+    /// </summary>
     public class LocationViewModel : ViewModel
     {
 
