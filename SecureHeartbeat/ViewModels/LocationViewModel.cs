@@ -18,7 +18,6 @@ namespace SecureHeartbeat.ViewModels
     /// </summary>
     public class LocationViewModel : ViewModel
     {
-
         private IMap _map;
         private LocationModel _location;
         private Boolean _isLoaded = false;
