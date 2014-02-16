@@ -7,6 +7,8 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SecureHeartbeat.Resources;
 using SecureHeartbeat.ViewModels;
+using Parse;
+
 
 
 namespace SecureHeartbeat
