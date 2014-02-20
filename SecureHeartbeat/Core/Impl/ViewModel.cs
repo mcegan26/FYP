@@ -33,7 +33,7 @@ namespace SecureHeartbeat.Core.Impl
         /// </summary>
         public virtual void NavigatedTo()
         {
-            // Noop - By default this implementation will do nothing
+            // By default this implementation will do nothing
             // Instead extended classes should override this implementation if such functionality is required
         }
     }

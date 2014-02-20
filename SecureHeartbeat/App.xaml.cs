@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Device.Location;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
@@ -114,6 +116,12 @@ namespace SecureHeartbeat
             // Language display initialization
             InitializeLanguage();
 
+
+            //this.InitializeComponent();
+            //this.Suspending += OnSuspending;
+
+            ParseClient.Initialize("JO4tBIiydFtLJ8zjDFg10Km8YS84a2WqgC8hUiQ3", "y2dLvFgBeyzt89pv9gLtJBaZlsMn7jiZfIty5Ufb");
+
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
             {
@@ -137,8 +145,125 @@ namespace SecureHeartbeat
 
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
-        private void Application_Launching(object sender, LaunchingEventArgs e)
+        private async void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            /*var testObject = new ParseObject("TestObject");
+            testObject["foo"] = "bar";
+            await testObject.SaveAsync();*/
+
+            var user1 = new ParseUser()
+            {
+                Username = "10001",
+                Password = "password1",
+                Email = "rmcegan01@qub.ac.uk"
+            };
+
+            DateTime user1dob = new DateTime(1992, 3, 26);
+            double user1lat = 54.581728;
+            double user1long = -5.937756;
+            ParseGeoPoint user1GeoPoint = new ParseGeoPoint(user1lat, user1long);
+
+            user1["mobileNo"] = 07920401000;
+            user1["forename"] = "Ronan";
+            user1["surname"] = "McEgan";
+            user1["department"] = "IT";
+            user1["dob"] = user1dob;
+            user1["withinBoundary"] = true;
+            user1["NWLat"] = 54.582353;
+            user1["NWLong"] = -5.938432;
+            user1["SELat"] = 54.581122;
+            user1["SELong"] = -5.936571;
+            user1["currentLoc"] = user1GeoPoint;
+
+            var user1 = new ParseUser()
+            {
+                Username = "10001",
+                Password = "password1",
+                Email = "rmcegan01@qub.ac.uk"
+            };
+
+            DateTime user1dob = new DateTime(1992, 3, 26);
+            double user1lat = 54.581728;
+            double user1long = -5.937756;
+            ParseGeoPoint user1GeoPoint = new ParseGeoPoint(user1lat, user1long);
+
+            user1["mobileNo"] = 07920401000;
+            user1["forename"] = "Ronan";
+            user1["surname"] = "McEgan";
+            user1["department"] = "IT";
+            user1["dob"] = user1dob;
+            user1["withinBoundary"] = true;
+            user1["NWLat"] = 54.582353;
+            user1["NWLong"] = -5.938432;
+            user1["SELat"] = 54.581122;
+            user1["SELong"] = -5.936571;
+            user1["currentLoc"] = user1GeoPoint;
+
+            var user1 = new ParseUser()
+            {
+                Username = "10001",
+                Password = "password1",
+                Email = "rmcegan01@qub.ac.uk"
+            };
+
+            DateTime user1dob = new DateTime(1992, 3, 26);
+            double user1lat = 54.581728;
+            double user1long = -5.937756;
+            ParseGeoPoint user1GeoPoint = new ParseGeoPoint(user1lat, user1long);
+
+            user1["mobileNo"] = 07920401000;
+            user1["forename"] = "Ronan";
+            user1["surname"] = "McEgan";
+            user1["department"] = "IT";
+            user1["dob"] = user1dob;
+            user1["withinBoundary"] = true;
+            user1["NWLat"] = 54.582353;
+            user1["NWLong"] = -5.938432;
+            user1["SELat"] = 54.581122;
+            user1["SELong"] = -5.936571;
+            user1["currentLoc"] = user1GeoPoint;
+
+            var user1 = new ParseUser()
+            {
+                Username = "10001",
+                Password = "password1",
+                Email = "rmcegan01@qub.ac.uk"
+            };
+
+            DateTime user1dob = new DateTime(1992, 3, 26);
+            double user1lat = 54.581728;
+            double user1long = -5.937756;
+            ParseGeoPoint user1GeoPoint = new ParseGeoPoint(user1lat, user1long);
+
+            user1["mobileNo"] = 07920401000;
+            user1["forename"] = "Ronan";
+            user1["surname"] = "McEgan";
+            user1["department"] = "IT";
+            user1["dob"] = user1dob;
+            user1["withinBoundary"] = true;
+            user1["NWLat"] = 54.582353;
+            user1["NWLong"] = -5.938432;
+            user1["SELat"] = 54.581122;
+            user1["SELong"] = -5.936571;
+            user1["currentLoc"] = user1GeoPoint;
+
+            
+
+            await user1.SignUpAsync();
+            await user2.SignUpAsync();
+            await user3.SignUpAsync();
+            await user4.SignUpAsync();
+
+
+
+
+
+
+
+
+
+
+
         }
 
         // Code to execute when the application is activated (brought to foreground)

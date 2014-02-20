@@ -33,7 +33,7 @@ namespace SecureHeartbeat
            _viewModel.NavigatedTo();
 
 
-            Map rawr = SHBMap;
+            // Map map = SHBMap;
         }
     }
 }

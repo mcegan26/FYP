@@ -120,6 +120,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SHUser.cs" />
     <Compile Include="StatusPage.xaml.cs">
       <DependentUpon>StatusPage.xaml</DependentUpon>
     </Compile>
