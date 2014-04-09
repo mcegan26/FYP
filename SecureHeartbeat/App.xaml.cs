@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
+using Coding4Fun.Toolkit.Audio;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SecureHeartbeat.Resources;
@@ -22,6 +23,9 @@ namespace SecureHeartbeat
         private static LocationViewModel _locationvm = null;
         private static AudioPlaybackViewModel _audioPlaybackvm = null;
         private static UnregisterViewModel _unregistervm = null;
+        private static LoginViewModel _loginvm = null;
+        private bool loggedIn = false;
+
 
 
         /// <summary>
@@ -57,11 +61,6 @@ namespace SecureHeartbeat
                 return _statusvm;
             }
         }
-
-        /// <summary>
-        /// A static ViewModel used by the views to bind against.
-        /// </summary>
-        /// <returns>The MainViewModel object.</returns>
  
 
         /// <summary>
@@ -89,6 +88,21 @@ namespace SecureHeartbeat
                     _unregistervm = new UnregisterViewModel();
 
                 return _unregistervm;
+            }
+        }
+
+        public static LoginViewModel Loginvm
+        {
+            get
+            {
+                // Delay creation of the view model until necessary
+                if (_loginvm == null)
+                {
+                    _loginvm = new LoginViewModel();
+                }
+                    
+
+                return _loginvm;
             }
         }
 
@@ -149,7 +163,7 @@ namespace SecureHeartbeat
         {
             /*var testObject = new ParseObject("TestObject");
             testObject["foo"] = "bar";
-            await testObject.SaveAsync();*/
+            await testObject.SaveAsync();
 
             var user1 = new ParseUser()
             {
@@ -163,7 +177,7 @@ namespace SecureHeartbeat
             double user1long = -5.937756;
             ParseGeoPoint user1GeoPoint = new ParseGeoPoint(user1lat, user1long);
 
-            user1["mobileNo"] = 07920401000;
+            user1["mobileNo"] = 07920401001;
             user1["forename"] = "Ronan";
             user1["surname"] = "McEgan";
             user1["department"] = "IT";
@@ -175,94 +189,82 @@ namespace SecureHeartbeat
             user1["SELong"] = -5.936571;
             user1["currentLoc"] = user1GeoPoint;
 
-            var user1 = new ParseUser()
+            var user2 = new ParseUser()
             {
-                Username = "10001",
-                Password = "password1",
-                Email = "rmcegan01@qub.ac.uk"
+                Username = "10002",
+                Password = "password2",
+                Email = "AB.Test@test.com"
             };
 
-            DateTime user1dob = new DateTime(1992, 3, 26);
-            double user1lat = 54.581728;
-            double user1long = -5.937756;
-            ParseGeoPoint user1GeoPoint = new ParseGeoPoint(user1lat, user1long);
+            DateTime user2dob = new DateTime(1980, 10, 5);
+            double user2lat = 54.581728;
+            double user2long = -5.937756;
+            ParseGeoPoint user2GeoPoint = new ParseGeoPoint(user2lat, user2long);
 
-            user1["mobileNo"] = 07920401000;
-            user1["forename"] = "Ronan";
-            user1["surname"] = "McEgan";
-            user1["department"] = "IT";
-            user1["dob"] = user1dob;
-            user1["withinBoundary"] = true;
-            user1["NWLat"] = 54.582353;
-            user1["NWLong"] = -5.938432;
-            user1["SELat"] = 54.581122;
-            user1["SELong"] = -5.936571;
-            user1["currentLoc"] = user1GeoPoint;
+            user2["mobileNo"] = 07920401002;
+            user2["forename"] = "A";
+            user2["surname"] = "B";
+            user2["department"] = "IT";
+            user2["dob"] = user2dob;
+            user2["withinBoundary"] = true;
+            user2["NWLat"] = 54.582353;
+            user2["NWLong"] = -5.938432;
+            user2["SELat"] = 54.581122;
+            user2["SELong"] = -5.936571;
+            user2["currentLoc"] = user2GeoPoint;
 
-            var user1 = new ParseUser()
+            var user3 = new ParseUser()
             {
-                Username = "10001",
-                Password = "password1",
-                Email = "rmcegan01@qub.ac.uk"
+                Username = "10003",
+                Password = "password3",
+                Email = "R.H@test.com"
             };
 
-            DateTime user1dob = new DateTime(1992, 3, 26);
-            double user1lat = 54.581728;
-            double user1long = -5.937756;
-            ParseGeoPoint user1GeoPoint = new ParseGeoPoint(user1lat, user1long);
+            DateTime user3dob = new DateTime(1992, 1, 17);
+            double user3lat = 54.581728;
+            double user3long = -5.937756;
+            ParseGeoPoint user3GeoPoint = new ParseGeoPoint(user3lat, user3long);
 
-            user1["mobileNo"] = 07920401000;
-            user1["forename"] = "Ronan";
-            user1["surname"] = "McEgan";
-            user1["department"] = "IT";
-            user1["dob"] = user1dob;
-            user1["withinBoundary"] = true;
-            user1["NWLat"] = 54.582353;
-            user1["NWLong"] = -5.938432;
-            user1["SELat"] = 54.581122;
-            user1["SELong"] = -5.936571;
-            user1["currentLoc"] = user1GeoPoint;
+            user3["mobileNo"] = 07920401003;
+            user3["forename"] = "R";
+            user3["surname"] = "H";
+            user3["department"] = "Marketing";
+            user3["dob"] = user3dob;
+            user3["withinBoundary"] = true;
+            user3["NWLat"] = 54.582353;
+            user3["NWLong"] = -5.938432;
+            user3["SELat"] = 54.581122;
+            user3["SELong"] = -5.936571;
+            user3["currentLoc"] = user3GeoPoint;
 
-            var user1 = new ParseUser()
+            var user4 = new ParseUser()
             {
-                Username = "10001",
-                Password = "password1",
-                Email = "rmcegan01@qub.ac.uk"
+                Username = "10004",
+                Password = "password4",
+                Email = "SA.Test@test.com"
             };
 
-            DateTime user1dob = new DateTime(1992, 3, 26);
-            double user1lat = 54.581728;
-            double user1long = -5.937756;
-            ParseGeoPoint user1GeoPoint = new ParseGeoPoint(user1lat, user1long);
+            DateTime user4dob = new DateTime(1970, 5, 8);
+            double user4lat = 54.581728;
+            double user4long = -5.937756;
+            ParseGeoPoint user4GeoPoint = new ParseGeoPoint(user4lat, user4long);
 
-            user1["mobileNo"] = 07920401000;
-            user1["forename"] = "Ronan";
-            user1["surname"] = "McEgan";
-            user1["department"] = "IT";
-            user1["dob"] = user1dob;
-            user1["withinBoundary"] = true;
-            user1["NWLat"] = 54.582353;
-            user1["NWLong"] = -5.938432;
-            user1["SELat"] = 54.581122;
-            user1["SELong"] = -5.936571;
-            user1["currentLoc"] = user1GeoPoint;
-
-            
+            user4["mobileNo"] = 07920401004;
+            user4["forename"] = "S";
+            user4["surname"] = "A";
+            user4["department"] = "HR";
+            user4["dob"] = user4dob;
+            user4["withinBoundary"] = true;
+            user4["NWLat"] = 54.582353;
+            user4["NWLong"] = -5.938432;
+            user4["SELat"] = 54.581122;
+            user4["SELong"] = -5.936571;
+            user4["currentLoc"] = user4GeoPoint;
 
             await user1.SignUpAsync();
             await user2.SignUpAsync();
             await user3.SignUpAsync();
-            await user4.SignUpAsync();
-
-
-
-
-
-
-
-
-
-
+            await user4.SignUpAsync();*/
 
         }
 
@@ -270,11 +272,28 @@ namespace SecureHeartbeat
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
-            // Ensure that application state is restored appropriately
+            
+            //if (!loggedIn)
+            //{
+            //    if (!App.Loginvm.IsDataLoaded)
+            //    {
+            //        App.Loginvm.LoadData();
+            //    }
+            //}
+            //else
+            //{
+            //    // Ensure that application state is restored appropriately
+            //    if (!App.BaseViewModel.IsDataLoaded)
+            //    {
+            //        App.BaseViewModel.LoadData();
+            //    }
+            //}
+
             if (!App.BaseViewModel.IsDataLoaded)
             {
                 App.BaseViewModel.LoadData();
             }
+                
         }
 
         // Code to execute when the application is deactivated (sent to background)

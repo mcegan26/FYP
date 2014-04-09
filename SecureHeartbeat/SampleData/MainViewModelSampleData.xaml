@@ -2,13 +2,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:vm="clr-namespace:SecureHeartbeat.ViewModels"
+    xmlns:models="clr-namespace:SecureHeartbeat.Models"
     SampleProperty="Sample Text Property Value">
 
     <vm:MainViewModel.Items>
-        <vm:ItemViewModel ID="0" LineOne="Device Status" LineTwo="Current user details" LineThree="View a report of the curent user logged into this device"/>
-        <vm:ItemViewModel ID="1" LineOne="Current Location" LineTwo="Show device on a map" LineThree="Show the current location of this device within Bing Maps"/>
-        <vm:ItemViewModel ID="2" LineOne="Sound Files" LineTwo="Listen back to the sound files" LineThree="Small media player to select from the list of sound files that have been recorded on this device and listen back to them (in .wav format)"/>
-        <vm:ItemViewModel ID="3" LineOne="Unregister Device" LineTwo="Take the device outside corporate environment securely" LineThree="Remove location tracking and device from corporate boundary"/>
+        <models:ItemViewModel ID="0" LineOne="Device Status" LineTwo="Current user details" LineThree="View a report of the curent user logged into this device"/>
+        <models:ItemViewModel ID="1" LineOne="Current Location" LineTwo="Show device on a map" LineThree="Show the current location of this device within Bing Maps"/>
+        <models:ItemViewModel ID="2" LineOne="Sound Files" LineTwo="Listen back to the sound files" LineThree="Small media player to select from the list of sound files that have been recorded on this device and listen back to them (in .wav format)"/>
+        <models:ItemViewModel ID="3" LineOne="Unregister Device" LineTwo="Take the device outside corporate environment securely" LineThree="Remove location tracking and device from corporate boundary"/>
     </vm:MainViewModel.Items>
 
 </vm:MainViewModel>

@@ -22,7 +22,7 @@ namespace SecureHeartbeat
             InitializeComponent();
             // Set the data context of the LongListSelector control to the sample data
             DataContext = App.AudioPlaybackvm;
-
+            
             // Sample code to localize the ApplicationBar
             //BuildLocalizedApplicationBar();
         }
@@ -50,7 +50,7 @@ namespace SecureHeartbeat
             PlayButton.IsEnabled = true;
             SaveButton.IsEnabled = true;
 
-
+            
         }
 
         // TODO Move this into the appropiate Command or dedicated helper class
@@ -66,6 +66,7 @@ namespace SecureHeartbeat
                 soundData.Dispose();
             }
 
+            // TODO Save to parse with user details
             soundFileName = string.Format("SHBSoudFile{0}.wav", DateTime.Now.ToFileTime());
             var rawSoundData = memoryAudioBuffer.GetWavAsByteArray(audioRecorder.SampleRate);
 

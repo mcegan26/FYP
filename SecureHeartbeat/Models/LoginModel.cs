@@ -5,6 +5,14 @@ namespace SecureHeartbeat.Models
 {
     public class LoginModel : INotifyPropertyChanged
     {
+
+        public LoginModel()
+        {
+            _username = "";
+            _password = "";
+
+        }
+
         private string _id;
         /// <summary>
         /// Sample ViewModel property; this property is used to identify the object.
@@ -37,16 +45,8 @@ namespace SecureHeartbeat.Models
             {
                 return _usernameLabel;
             }
-            set
-            {
-                if (value != _usernameLabel)
-                {
-                    _usernameLabel = value;
-                    NotifyPropertyChanged("Username");
-                }
-            }
         }
-        
+
         private string _username;
         /// <summary>
         /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
@@ -68,7 +68,7 @@ namespace SecureHeartbeat.Models
             }
         }
 
-        private string _passwordLabel = "Password: ";
+        private string _passwordLabel;
         /// <summary>
         /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
         /// </summary>
@@ -78,14 +78,6 @@ namespace SecureHeartbeat.Models
             get
             {
                 return _passwordLabel;
-            }
-            set
-            {
-                if (value != _passwordLabel)
-                {
-                    _passwordLabel = value;
-                    NotifyPropertyChanged("PasswordLabel");
-                }
             }
         }
 
@@ -105,56 +97,10 @@ namespace SecureHeartbeat.Models
                 if (value != _password)
                 {
                     _password = value;
-                    NotifyPropertyChanged("MobileNumber");
+                    NotifyPropertyChanged("Password");
                 }
             }
         }
-
-
-        
-
-        private string _serverLabel = "Server Address: ";
-        /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
-        /// </summary>
-        /// <returns></returns>
-        public string ServerLabel
-        {
-            get
-            {
-                return _serverLabel;
-            }
-            set
-            {
-                if (value != _serverLabel)
-                {
-                    _serverLabel = value;
-                    NotifyPropertyChanged("ServerLabel");
-                }
-            }
-        }
-
-        private string _server;
-        /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
-        /// </summary>
-        /// <returns></returns>
-        public string Server
-        {
-            get
-            {
-                return _server;
-            }
-            set
-            {
-                if (value != _server)
-                {
-                    _server = value;
-                    NotifyPropertyChanged("Server");
-                }
-            }
-        }
-
 
 
         public event PropertyChangedEventHandler PropertyChanged;

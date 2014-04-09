@@ -152,4 +152,7 @@
   <data name="UnregisterPageTitle" xml:space="preserve">
     <value>Unregister Device</value>
   </data>
+  <data name="LoginPageTitle" xml:space="preserve">
+    <value>Login</value>
+  </data>
 </root>

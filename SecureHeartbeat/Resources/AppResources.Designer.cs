@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace SecureHeartbeat.Resources {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -90,6 +93,15 @@ namespace SecureHeartbeat.Resources {
         public static string LocationPageTitle {
             get {
                 return ResourceManager.GetString("LocationPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string LoginPageTitle {
+            get {
+                return ResourceManager.GetString("LoginPageTitle", resourceCulture);
             }
         }
         

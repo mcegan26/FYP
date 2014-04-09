@@ -93,6 +93,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commands\LoginAttemptCommand.cs" />
     <Compile Include="Core\Interfaces\INavigationAware.cs" />
     <Compile Include="AudioPlaybackPage.xaml.cs">
       <DependentUpon>AudioPlaybackPage.xaml</DependentUpon>
@@ -108,6 +109,9 @@
     </Compile>
     <Compile Include="LocationPage.xaml.cs">
       <DependentUpon>LocationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -133,6 +137,7 @@
     <Compile Include="Models\LocationModel.cs" />
     <Compile Include="ViewModels\LocationViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\StatusViewModel.cs" />
     <Compile Include="Models\StatusModel.cs" />
@@ -156,6 +161,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -167,6 +176,10 @@
     <Page Include="SampleData\AudioPlaybackViewModelSampleData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SampleData\LoginViewModelSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="StatusPage.xaml">
       <SubType>Designer</SubType>

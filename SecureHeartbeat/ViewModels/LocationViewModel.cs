@@ -20,6 +20,7 @@ namespace SecureHeartbeat.ViewModels
         private LocationModel _location;
         private Boolean _isLoaded = false;
         private ICommand _locateCommand;
+
         public ICommand LocateCommand
         {
             get { return _locateCommand; }
@@ -27,7 +28,7 @@ namespace SecureHeartbeat.ViewModels
             {
                 if (value != _locateCommand)
                 {
-                    _locateCommand = value;
+                    _locateCommand = new LocateCommand(_map, _location);
                     OnPropertyChanged("LocateCommand");
                 }
             }

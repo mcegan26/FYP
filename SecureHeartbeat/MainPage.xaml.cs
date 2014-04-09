@@ -57,6 +57,9 @@ namespace SecureHeartbeat
                 case 3:
                     NavigationService.Navigate(new Uri("/UnregisterPage.xaml", UriKind.Relative));
                     break;
+                case 4:
+                    NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+                    break;
                 default:;
                     break;
             }
