@@ -29,7 +29,7 @@ namespace SecureHeartbeat.Commands
         public async void Execute(object parameter)
         {
             // The user has opted out of Location posistioning
-            if ((bool)IsolatedStorageSettings.ApplicationSettings["LocationConsent"] != true)
+            if (!(bool)IsolatedStorageSettings.ApplicationSettings["LocationConsent"])
             {
                 return;
             }
@@ -40,7 +40,7 @@ namespace SecureHeartbeat.Commands
             };
 
             var geoposition = await geolocator.GetGeopositionAsync(
-                maximumAge: TimeSpan.FromMinutes(5),
+                maximumAge: TimeSpan.FromMinutes(2),
                 timeout: TimeSpan.FromSeconds(20)
                 );
 

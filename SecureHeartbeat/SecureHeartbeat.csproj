@@ -251,6 +251,16 @@
   <ItemGroup>
     <Folder Include="Pages\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SHClassLibrary\SHClassLibrary.csproj">
+      <Project>{45EA7E8D-D3BF-4866-A16C-37B5BBA3B169}</Project>
+      <Name>SHClassLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TrackingAgent\TrackingAgent.csproj">
+      <Project>{E258A6CB-F0A1-45AA-9122-D374BDCE0550}</Project>
+      <Name>TrackingAgent</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

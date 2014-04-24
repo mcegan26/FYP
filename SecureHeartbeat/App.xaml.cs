@@ -24,9 +24,19 @@ namespace SecureHeartbeat
         private static AudioPlaybackViewModel _audioPlaybackvm = null;
         private static UnregisterViewModel _unregistervm = null;
         private static LoginViewModel _loginvm = null;
-        private bool loggedIn = false;
+        private static bool _loggedIn = false;
 
-
+        public static bool LoggedIn
+        {
+            get
+            {
+                return _loggedIn;
+            }
+            set
+            {
+                _loggedIn = value;
+            }
+        }
 
         /// <summary>
         /// A static ViewModel used by the views to bind against.
@@ -272,27 +282,27 @@ namespace SecureHeartbeat
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
-            
-            //if (!loggedIn)
-            //{
-            //    if (!App.Loginvm.IsDataLoaded)
-            //    {
-            //        App.Loginvm.LoadData();
-            //    }
-            //}
-            //else
-            //{
-            //    // Ensure that application state is restored appropriately
-            //    if (!App.BaseViewModel.IsDataLoaded)
-            //    {
-            //        App.BaseViewModel.LoadData();
-            //    }
-            //}
 
-            if (!App.BaseViewModel.IsDataLoaded)
+            if (!_loggedIn)
             {
-                App.BaseViewModel.LoadData();
+                if (!App.Loginvm.IsDataLoaded)
+                {
+                    App.Loginvm.LoadData();
+                }
             }
+            else
+            {
+                // Ensure that application state is restored appropriately
+                if (!App.BaseViewModel.IsDataLoaded)
+                {
+                    App.BaseViewModel.LoadData();
+                }
+            }
+
+            //if (!App.BaseViewModel.IsDataLoaded)
+            //{
+            //    App.BaseViewModel.LoadData();
+            //}
                 
         }
 

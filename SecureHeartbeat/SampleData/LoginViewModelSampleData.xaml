@@ -1,0 +1,12 @@
+﻿<vm:LoginViewModel
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:SecureHeartbeat.ViewModels"
+    xmlns:models="clr-namespace:SecureHeartbeat.Models"
+    SampleProperty="Sample Text Property Value">
+
+    <vm:LoginViewModel.Items>
+        <models:LoginModel Username="" Password=""/>
+    </vm:LoginViewModel.Items>
+
+</vm:LoginViewModel>
