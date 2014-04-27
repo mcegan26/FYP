@@ -1,9 +1,14 @@
-﻿using System.Diagnostics;
+﻿using System.Device.Location;
+using System.Diagnostics;
+using System.Threading;
 using System.Windows;
+using Microsoft.Phone.Maps.Controls;
+using Microsoft.Phone.Maps.Services;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using System;
 using Windows.Devices.Geolocation;
+using Parse;
 using SHClassLibrary;
 
 namespace TrackingAgent
@@ -57,8 +62,53 @@ namespace TrackingAgent
 
             if (!deviceLoc.Equals(null))
             {
+                var shUserID = DeviceStorage.ReadSHUser();
+                var getUsersWithMatchingID = from user in ParseObject.GetQuery("User")
+                                     where user.Get<string>("username") == shUserID
+                                     select user;
+
+                ParseObject currentUser = await getUsersWithMatchingID.FirstAsync();
+                var nwLat = currentUser.Get<double>("NWLat");
+                var nwLong = currentUser.Get<double>("NWLong");
+                var seLat = currentUser.Get<double>("SELat");
+                var seLong = currentUser.Get<double>("SELong");
 
 
+                //new GeoCoordinate(54.58370919, -5.9322165), new GeoCoordinate(54.583709199999994, -5.9322165)
+                LocationRectangle geoFence;
+                geoFence = new LocationRectangle(new GeoCoordinate(nwLat, nwLong), new GeoCoordinate(seLat, seLong));
+                var insideBoundary = Locater.UserInGeoFence(geoFence, deviceLoc);
+
+                if (!insideBoundary)
+                {
+                    currentUser["withinBoundary"] = false;
+
+                    if (SoundRecorder.RecordCounter % 3 == 0)
+                    {
+                        SoundRecorder.RecordCounter = 0;
+                        var soundFileByteStream = SoundRecorder.Record();
+                        var SHSoundFileTime = string.Format("SHBSoudFile{0}.wav", DateTime.Now.ToFileTime());
+                        ParseFile soundFile = new ParseFile(SHSoundFileTime, soundFileByteStream);
+
+                        await soundFile.SaveAsync();
+
+                        var SHSoundFile = string.Format("SHBSoudFile{0}", SoundRecorder.SoundFileCounter);
+                        currentUser[SHSoundFile] = soundFile;
+                        Console.WriteLine("Recordered the soundfile and svaed it as a parse file and uploaded it");
+                    }
+                    SoundRecorder.RecordCounter++;
+                }
+                else
+                {
+                    Console.WriteLine("User is inside the bounds");
+                }
+
+
+                ParseGeoPoint parseDeviceLoc = new ParseGeoPoint(deviceLoc.Coordinate.Latitude, deviceLoc.Coordinate.Longitude);
+                currentUser["currentLoc"] = parseDeviceLoc;
+
+                await currentUser.SaveAsync();
+                Console.WriteLine("Saved the updated user that is outside the bounds to Parse");
             }
 
 

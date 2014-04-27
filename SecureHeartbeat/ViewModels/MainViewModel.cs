@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO.IsolatedStorage;
 using SecureHeartbeat.Core.Impl;
 using SecureHeartbeat.Models;
 using SecureHeartbeat.Resources;
@@ -9,6 +10,8 @@ namespace SecureHeartbeat.ViewModels
 {
     public class MainViewModel : ViewModel
     {
+        private IsolatedStorageFileStream soundData;
+
         public MainViewModel()
         {
             this.Items = new ObservableCollection<ItemViewModel>();
@@ -72,6 +75,7 @@ namespace SecureHeartbeat.ViewModels
 
             this.IsDataLoaded = true;
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)

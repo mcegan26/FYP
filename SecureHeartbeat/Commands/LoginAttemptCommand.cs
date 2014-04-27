@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -9,6 +10,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Parse;
 using SecureHeartbeat.Models;
+using SHClassLibrary;
 
 namespace SecureHeartbeat.Commands
 {
@@ -42,6 +44,7 @@ namespace SecureHeartbeat.Commands
                     phoneApplicationFrame.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
                 }
 
+                DeviceStorage.SaveSHUser(_loginModel.Username);
             }
             catch (Exception e)
             {

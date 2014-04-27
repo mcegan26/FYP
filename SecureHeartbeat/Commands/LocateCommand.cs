@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Device.Location;
 using System.IO.IsolatedStorage;
 using System.Reflection;
 using System.Windows.Input;
 using Windows.Devices.Geolocation;
+using Microsoft.Phone.Maps.Controls;
+using Microsoft.Phone.Maps.Services;
+using Parse;
 using SecureHeartbeat.Maps;
 using SecureHeartbeat.Models;
+
 
 namespace SecureHeartbeat.Commands
 {
@@ -58,6 +63,7 @@ namespace SecureHeartbeat.Commands
 
             // TODO Inject the IMap reference within my ICommand implementation constructor
             _map.SetLocation(geoposition.Coordinate.Latitude, geoposition.Coordinate.Longitude);
+            
             //Point currentViewPoint = SHBMap.ConvertGeoCoordinateToViewportPoint(new GeoCoordinate(51.51369, -0.088137));
  
         }

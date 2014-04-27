@@ -11,7 +11,7 @@ using Microsoft.Phone.Shell;
 using SecureHeartbeat.Resources;
 using SecureHeartbeat.ViewModels;
 using Parse;
-
+using SHClassLibrary;
 
 
 namespace SecureHeartbeat
@@ -145,6 +145,7 @@ namespace SecureHeartbeat
             //this.Suspending += OnSuspending;
 
             ParseClient.Initialize("JO4tBIiydFtLJ8zjDFg10Km8YS84a2WqgC8hUiQ3", "y2dLvFgBeyzt89pv9gLtJBaZlsMn7jiZfIty5Ufb");
+            SoundRecorder.SoundFileCounter = 1;
 
             // Show graphics profiling information while debugging.
             if (Debugger.IsAttached)
@@ -298,11 +299,6 @@ namespace SecureHeartbeat
                     App.BaseViewModel.LoadData();
                 }
             }
-
-            //if (!App.BaseViewModel.IsDataLoaded)
-            //{
-            //    App.BaseViewModel.LoadData();
-            //}
                 
         }
 

@@ -48,12 +48,9 @@ namespace SecureHeartbeat
             audioRecorder.Stop();
             saveAudioRecording(audioRecorder.Buffer);
             PlayButton.IsEnabled = true;
-            SaveButton.IsEnabled = true;
-
-            
+            SaveButton.IsEnabled = true;  
         }
 
-        // TODO Move this into the appropiate Command or dedicated helper class
         private void saveAudioRecording(MemoryStream memoryAudioBuffer)
         {
             if (memoryAudioBuffer == null)
