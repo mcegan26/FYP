@@ -1,4 +1,5 @@
-﻿using System.Windows.Navigation;
+﻿using System.Linq;
+using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 
 namespace SecureHeartbeat
@@ -20,6 +21,12 @@ namespace SecureHeartbeat
             if (!App.Unregistervm.IsDataLoaded)
             {
                 App.Unregistervm.LoadData();
+            }
+
+            var lastPage = NavigationService.BackStack.FirstOrDefault();
+            if (lastPage != null && lastPage.Source.ToString().Contains("/MainPage.xaml"))
+            {
+                this.NavigationService.RemoveBackEntry();
             }
         }
     }

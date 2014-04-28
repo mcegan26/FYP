@@ -2,9 +2,12 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO.IsolatedStorage;
+using System.Windows;
+using Parse;
 using SecureHeartbeat.Core.Impl;
 using SecureHeartbeat.Models;
 using SecureHeartbeat.Resources;
+using SHClassLibrary;
 
 namespace SecureHeartbeat.ViewModels
 {
@@ -70,10 +73,14 @@ namespace SecureHeartbeat.ViewModels
             this.Items.Add(new ItemViewModel() { ID = 1, LineOne = "Current Location", LineTwo = "Show device on a map", LineThree = "Show the current location of this device within Bing Maps" });
             this.Items.Add(new ItemViewModel() { ID = 2, LineOne = "Sound Files", LineTwo = "Listen back to the sound files", LineThree = "Small media player to select from the list of sound files that have been recorded on this device and listen back to them (in .wav format)" });
             this.Items.Add(new ItemViewModel() { ID = 3, LineOne = "Unregister Device", LineTwo = "Take the device outside corporate environment securely", LineThree = "Remove location tracking and device from corporate boundary" });
-            this.Items.Add(new ItemViewModel() { ID = 4, LineOne = "Log in", LineTwo = "Test the log in feature", LineThree = "Allow a user to log in to the the service" });
            
 
             this.IsDataLoaded = true;
+        }
+
+        public override void NavigatedTo()
+        {
+            Locater.AllowDeviceLocation();
         }
 
 

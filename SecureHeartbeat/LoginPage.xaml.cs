@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -7,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Parse;
 
 namespace SecureHeartbeat
 {
@@ -24,15 +26,20 @@ namespace SecureHeartbeat
         // Load data for the ViewModel Items
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (!App.Loginvm.IsDataLoaded)
+            if(ParseUser.CurrentUser == null)
+            { 
+                if (!App.Loginvm.IsDataLoaded)
+                {
+                    App.Loginvm.LoadData();
+                }
+            }
+            else
             {
-                App.Loginvm.LoadData();
+                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
             }
         }
 
-        //private void UpdateSource(object sender, RoutedEventArgs e)
-        //{
-        //    throw new NotImplementedException();
-        //}
+
+        
     }
 }

@@ -7,6 +7,7 @@ using SecureHeartbeat.Models;
 using SecureHeartbeat.Resources;
 using System.Windows.Input;
 using SecureHeartbeat.Commands;
+using SHClassLibrary;
 
 
 namespace SecureHeartbeat.ViewModels
@@ -34,16 +35,17 @@ namespace SecureHeartbeat.ViewModels
             }
         }
 
+        public IMap Map
+        {
+            get { return _map; }
+        }
+
         public LocationViewModel(IMap map)
         {
-            //this.Items = new ObservableCollection<LocationModel>();
-            //_location = new LocationModel();
-            //LoadData();
-
-            _location = new LocationModel() { Latitude = 51.51369, Longitude = -0.088137, PostalCode = "EC2R 8AH" };
-            LocateCommand = new LocateCommand(_map, _location);
-
-            this._map = map;
+            //_location = new LocationModel() { Latitude = 51.51369, Longitude = -0.088137, PostalCode = "EC2R 8AH" };
+            _location = new LocationModel() { Latitude = 0, Longitude = 0, PostalCode = "Unknown" };
+            _map = map;
+            _locateCommand = new LocateCommand(Map, _location);
         }
 
         /// <summary>
@@ -100,27 +102,8 @@ namespace SecureHeartbeat.ViewModels
         public override void NavigatedTo()
         {
             base.NavigatedTo();
-
-            if (IsolatedStorageSettings.ApplicationSettings.Contains("LocationConsent"))
-            {
-                // User has opted out of Location
-                if ((bool)IsolatedStorageSettings.ApplicationSettings["LocationConsent"] == false)
-                    return;
-            }
-            else
-            {
-                // TODO Provide a way of doing this within MVVM
-                MessageBoxResult result =
-                    MessageBox.Show("This app accesses your phone's location. Is that ok?",
-                    "Location",
-                    MessageBoxButton.OKCancel);
-
-                var isOK = (result == MessageBoxResult.OK);
-                IsolatedStorageSettings.ApplicationSettings["LocationConsent"] = isOK;
-                IsolatedStorageSettings.ApplicationSettings.Save();
-            }
-
-            _map.SetLocation(Location.Latitude, Location.Longitude);
+            Locater.AllowDeviceLocation();
+            //_map.SetLocation(Location.Latitude, Location.Longitude);
         }
     }
 }

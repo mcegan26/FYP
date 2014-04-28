@@ -43,7 +43,7 @@ namespace SecureHeartbeat.Commands
                 {
                     phoneApplicationFrame.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
                 }
-
+                App.LoggedIn = true;
                 DeviceStorage.SaveSHUser(_loginModel.Username);
             }
             catch (Exception e)
@@ -54,6 +54,8 @@ namespace SecureHeartbeat.Commands
                     "Login Failed",
                     MessageBoxButton.OK);
             }
+
+            Locater.AllowDeviceLocation();
         }
 
 

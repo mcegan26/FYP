@@ -94,6 +94,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\LoginAttemptCommand.cs" />
+    <Compile Include="Commands\ReturnToLogin.cs" />
     <Compile Include="Core\Interfaces\INavigationAware.cs" />
     <Compile Include="AudioPlaybackPage.xaml.cs">
       <DependentUpon>AudioPlaybackPage.xaml</DependentUpon>
@@ -248,9 +249,7 @@
       <HintPath>..\packages\Parse.1.2.14\lib\wp8\Parse.Phone.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pages\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SHClassLibrary\SHClassLibrary.csproj">
       <Project>{45EA7E8D-D3BF-4866-A16C-37B5BBA3B169}</Project>

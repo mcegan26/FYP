@@ -15,8 +15,8 @@ namespace SecureHeartbeat.Commands
 {
     public class LocateCommand : ICommand 
     {
-        private readonly IMap _map;
-        private readonly LocationModel _locationModel;
+        private IMap _map;
+        private LocationModel _locationModel;
 
         public LocateCommand(IMap map, LocationModel locationModel)
         {
@@ -45,27 +45,48 @@ namespace SecureHeartbeat.Commands
             };
 
             var geoposition = await geolocator.GetGeopositionAsync(
-                maximumAge: TimeSpan.FromMinutes(2),
-                timeout: TimeSpan.FromSeconds(20)
+                maximumAge: TimeSpan.FromSeconds(25),
+                timeout: TimeSpan.FromSeconds(16)
                 );
 
             try
             {
-                _locationModel.Latitude = geoposition.Coordinate.Latitude;
-                _locationModel.Longitude = geoposition.Coordinate.Longitude;
-                _locationModel.PostalCode = geoposition.CivicAddress.PostalCode;
+                if (geoposition.Coordinate.Latitude == null)
+                {
+                    _locationModel.Latitude = 0;
+                }
+                else
+                {
+                    _locationModel.Latitude = geoposition.Coordinate.Latitude;
+                }
+                
+                if (geoposition.Coordinate.Longitude == null)
+                {
+                    _locationModel.Longitude = 0;
+                }
+                else
+                {
+                    _locationModel.Longitude = geoposition.Coordinate.Longitude;
+                }
+                
+                if (geoposition.CivicAddress.PostalCode == null)
+                {
+                    _locationModel.PostalCode = "N/A";
+                }
+                else
+                {
+                    _locationModel.PostalCode = geoposition.CivicAddress.PostalCode;
+                }
+                
             }
             catch (Exception)
             {
-                _locationModel.PostalCode = "N/A";
-                //throw new TargetInvocationException("Can't find postcode", new Exception());
+                // Common for Civic address to be unable obtainable so need to catch a null
+                // pointer exception to stop app from crashing but issue handled above for actual exception
             }
 
-            // TODO Inject the IMap reference within my ICommand implementation constructor
             _map.SetLocation(geoposition.Coordinate.Latitude, geoposition.Coordinate.Longitude);
-            
-            //Point currentViewPoint = SHBMap.ConvertGeoCoordinateToViewportPoint(new GeoCoordinate(51.51369, -0.088137));
- 
+
         }
     }
 }

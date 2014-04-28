@@ -1,36 +1,82 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
+using System.IO.IsolatedStorage;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Navigation;
+using SecureHeartbeat.Commands;
 using SecureHeartbeat.Core.Impl;
 using SecureHeartbeat.Models;
 using SecureHeartbeat.Resources;
-using SecureHeartbeat.Commands;
+using SHClassLibrary;
 
 
 namespace SecureHeartbeat.ViewModels
 {
-    public class UnregisterViewModel : ViewModel
+    public class LoginViewModel : ViewModel
     {
-        private ICommand _returnToLogin;
 
-        public ICommand ReturnToLogin
+
+        public string VmUsername
         {
-            get { return _returnToLogin; }
+            get
+            {
+                return loginModel.Username;
+            }
+            set
+            {
+                if (value != loginModel.Username)
+                {
+                    loginModel.Username = value;
+                    NotifyPropertyChanged("VmUsername");
+                }
+            }
         }
 
-        public UnregisterViewModel()
+
+        public string VmPassword
         {
-            this.Items = new ObservableCollection<UnregisterModel>();
-            _returnToLogin = new ReturnToLogin();
+            get
+            {
+                return loginModel.Password;
+            }
+            set
+            {
+                if (value != loginModel.Password)
+                {
+                    loginModel.Password = (string) value;
+                    NotifyPropertyChanged("VmPassword");
+                }
+            }
+        }
+
+        private LoginModel loginModel;
+        private ICommand _loginCommand;
+
+        public ICommand LoginAttemptCommand
+        {
+            get
+            {
+                if (_loginCommand == null)
+                {
+                    _loginCommand = new LoginAttemptCommand(loginModel);
+                }
+                return _loginCommand;
+            }
+            
+        }
+
+        public LoginViewModel()
+        {
+            loginModel = new LoginModel();
+            this.Items = new ObservableCollection<LoginModel>();
         }
 
         /// <summary>
         /// A collection for ItemViewModel objects.
         /// </summary>
-        public ObservableCollection<UnregisterModel> Items { get; private set; }
+        public ObservableCollection<LoginModel> Items { get; private set; }
 
         private string _sampleProperty = "Sample Runtime Property Value";
         /// <summary>
@@ -70,18 +116,21 @@ namespace SecureHeartbeat.ViewModels
             private set;
         }
 
-        
-
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
         public void LoadData()
         {
-            
-            this.Items.Add(new UnregisterModel());
-            
+            this.Items.Add(loginModel);
             this.IsDataLoaded = true;
         }
+
+        public override void NavigatedTo()
+        {
+            Locater.AllowDeviceLocation();
+        }
+
+    
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)

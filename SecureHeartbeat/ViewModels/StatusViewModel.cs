@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Parse;
 using SecureHeartbeat.Core.Impl;
 using SecureHeartbeat.Models;
 using SecureHeartbeat.Resources;
@@ -10,8 +11,11 @@ namespace SecureHeartbeat.ViewModels
 {
     public class StatusViewModel : ViewModel
     {
+        public StatusModel deviceUser;
+
         public StatusViewModel()
         {
+            deviceUser = new StatusModel();
             this.Items = new ObservableCollection<StatusModel>();
         }
 
@@ -63,8 +67,33 @@ namespace SecureHeartbeat.ViewModels
         /// </summary>
         public void LoadData()
         {
-            
-            this.Items.Add(new StatusModel() { ID = "0", Username = "E.g. John Smith", MobileNumber = "e.g. 07911223344", WithinBoundary = "e.g. Yes", LocationKnown = "e.g. Yes"});
+            new StatusModel()
+            {
+                ID = "0",
+                Username = "E.g. John Smith",
+                MobileNumber = "e.g. 07911223344",
+                WithinBoundary = "e.g. Yes",
+                LocationKnown = "e.g. Yes"
+            };
+
+            //var parseObjectID = ParseUser.CurrentUser.ObjectId;
+
+            deviceUser.ID = ParseUser.CurrentUser.Get<string>("username");
+            deviceUser.Username = ParseUser.CurrentUser.Get<string>("forename") + " " + ParseUser.CurrentUser.Get<string>("surname");
+            var numberWithoutZero = ParseUser.CurrentUser.Get<Int64>("mobileNo").ToString();
+            deviceUser.MobileNumber = "0" + numberWithoutZero;
+
+            if ((bool) ParseUser.CurrentUser.Get<bool>("withinBoundary"))
+            {
+                deviceUser.WithinBoundary = "Yes";
+            }
+            else
+            {
+                deviceUser.WithinBoundary = "No";
+            }
+
+            this.Items.Clear();
+            this.Items.Add(deviceUser);
            
 
             this.IsDataLoaded = true;

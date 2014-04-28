@@ -16,7 +16,7 @@
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="LoginPage.xaml" />
       <ExtendedTask Name="BackgroundTask"> 
-        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="TrackingAgent" Source="TrackingAgent" Type="TrackingAgent.ScheduledAgent" /> 
+        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="SecureHeartbeatBA" Source="TrackingAgent" Type="TrackingAgent.ScheduledAgent" /> 
       </ExtendedTask>  
     </Tasks>
     <Tokens>

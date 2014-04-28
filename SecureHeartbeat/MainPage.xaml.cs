@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Coding4Fun.Toolkit.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Parse;
 using SecureHeartbeat.Models;
 using SecureHeartbeat.Resources;
+using SHClassLibrary;
 
 namespace SecureHeartbeat
 {
@@ -29,6 +32,12 @@ namespace SecureHeartbeat
             if (!App.BaseViewModel.IsDataLoaded)
             {
                 App.BaseViewModel.LoadData();
+            }
+
+            var lastPage = NavigationService.BackStack.FirstOrDefault();
+            if (lastPage != null && lastPage.Source.ToString().Contains("/LoginPage.xaml"))
+            {
+                this.NavigationService.RemoveBackEntry();
             }
         }
 
@@ -55,10 +64,12 @@ namespace SecureHeartbeat
                     NavigationService.Navigate(new Uri("/AudioPlaybackPage.xaml", UriKind.Relative));
                     break;
                 case 3:
-                    NavigationService.Navigate(new Uri("/UnregisterPage.xaml", UriKind.Relative));
-                    break;
-                case 4:
-                    NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+                    if (ExitTrap.AreYouSure())
+                    {
+                        NavigationService.Navigate(new Uri("/UnregisterPage.xaml", UriKind.Relative));
+                        ParseUser.LogOut();
+                    }
+                    
                     break;
                 default:;
                     break;

@@ -26,7 +26,7 @@ namespace SecureHeartbeat.Models
             }
         }
 
-        private string _unregisterMessage1 = "This device has now been successfully unregistered from SMH Servers";
+        private string _unregisterMessage1 = "You have successfully logged out";
         /// <summary>
         /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
         /// </summary>
@@ -50,7 +50,7 @@ namespace SecureHeartbeat.Models
        
 
 
-        private string _unregisterMessage2 = "This device is now safe to take outside of corporate premises.";
+        private string _unregisterMessage2 = "This device is now safe to take outside of corporate premises";
         /// <summary>
         /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
         /// </summary>
@@ -72,7 +72,7 @@ namespace SecureHeartbeat.Models
         }
 
 
-        private string _unregisterMessage3 = "Thanks for using SMH";
+        private string _unregisterMessage3 = "Click below to Login as a new User";
         /// <summary>
         /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
         /// </summary>

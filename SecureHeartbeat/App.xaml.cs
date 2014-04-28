@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Device.Location;
 using System.Diagnostics;
+using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
 using Coding4Fun.Toolkit.Audio;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using SecureHeartbeat.Resources;
 using SecureHeartbeat.ViewModels;
@@ -277,6 +279,24 @@ namespace SecureHeartbeat
             await user3.SignUpAsync();
             await user4.SignUpAsync();*/
 
+
+            // The background Agent (that is used to track device location and if it leaves the geofence, record sound) has a timeout 
+            // of 2 weeks before it is removed, therefore by removing and reinstalling the agent we can refresh this limit.
+            string backgroundAgentName = "SecureHeartbeatBA";
+            PeriodicTask currentBA = ScheduledActionService.Find(backgroundAgentName) as PeriodicTask;
+
+            if (currentBA != null)
+            {
+                ScheduledActionService.Remove(backgroundAgentName);
+            }
+
+            PeriodicTask shPeriodicTask = new PeriodicTask(backgroundAgentName);
+            shPeriodicTask.Description = "Background task to update user's location and record sound files for anaylsis";
+
+            ScheduledActionService.Add(shPeriodicTask);
+
+            //ScheduledActionService.LaunchForTest(shPeriodicTask.Name, TimeSpan.FromSeconds(30));
+
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -284,7 +304,7 @@ namespace SecureHeartbeat
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
 
-            if (!_loggedIn)
+            if (ParseUser.CurrentUser == null)
             {
                 if (!App.Loginvm.IsDataLoaded)
                 {
@@ -293,6 +313,7 @@ namespace SecureHeartbeat
             }
             else
             {
+                LoggedIn = true;
                 // Ensure that application state is restored appropriately
                 if (!App.BaseViewModel.IsDataLoaded)
                 {

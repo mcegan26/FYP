@@ -1,13 +1,10 @@
-﻿using System.Device.Location;
+﻿using System.Collections.Generic;
+using System.Device.Location;
 using System.Diagnostics;
-using System.Threading;
 using System.Windows;
 using Microsoft.Phone.Maps.Controls;
-using Microsoft.Phone.Maps.Services;
 using Microsoft.Phone.Scheduler;
-using Microsoft.Phone.Shell;
 using System;
-using Windows.Devices.Geolocation;
 using Parse;
 using SHClassLibrary;
 
@@ -48,6 +45,7 @@ namespace TrackingAgent
         /// </remarks>
         protected override async void OnInvoke(ScheduledTask task)
         {
+            ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(60));
             //TODO: Add code to perform your task in background
             // Possibilty to double the time interval is preformed and binary state
             
@@ -63,29 +61,57 @@ namespace TrackingAgent
             if (!deviceLoc.Equals(null))
             {
                 var shUserID = DeviceStorage.ReadSHUser();
-                var getUsersWithMatchingID = from user in ParseObject.GetQuery("User")
-                                     where user.Get<string>("username") == shUserID
-                                     select user;
-
-                ParseObject currentUser = await getUsersWithMatchingID.FirstAsync();
-                var nwLat = currentUser.Get<double>("NWLat");
-                var nwLong = currentUser.Get<double>("NWLong");
-                var seLat = currentUser.Get<double>("SELat");
-                var seLong = currentUser.Get<double>("SELong");
-
-
-                //new GeoCoordinate(54.58370919, -5.9322165), new GeoCoordinate(54.583709199999994, -5.9322165)
-                LocationRectangle geoFence;
-                geoFence = new LocationRectangle(new GeoCoordinate(nwLat, nwLong), new GeoCoordinate(seLat, seLong));
-                var insideBoundary = Locater.UserInGeoFence(geoFence, deviceLoc);
-
-                if (!insideBoundary)
+                if (!shUserID.Equals(""))
                 {
-                    currentUser["withinBoundary"] = false;
+                    //var getUsersWithMatchingID = from user in ParseObject.GetQuery("User")
+                    //                             where user.Get<String>("username") == shUserID
+                    //                             select user;
 
-                    if (SoundRecorder.RecordCounter % 3 == 0)
+                    //var query = ParseObject.GetQuery("GameScore").WhereEqualTo("playerName", "Dan Stemkoski");
+                    //IEnumerable<ParseObject> results = await query.FindAsync();
+
+                    if (ParseUser.CurrentUser != null)
                     {
-                        SoundRecorder.RecordCounter = 0;
+                        var u = ParseUser.CurrentUser.Get<double>("NWLat");
+                        Console.WriteLine(u);
+                    }
+                    else
+                    {
+                        // show the signup or login screen
+                    }
+
+
+                    try
+                    {
+                        var getUsersWithMatchingID1 = ParseUser.GetQuery("User").WhereEqualTo("Username", shUserID);
+                        var currentUser1 = await getUsersWithMatchingID1.FirstOrDefaultAsync();
+                        var y = currentUser1.Get<double>("NWLat");
+                        Console.WriteLine("OMGee the NW LAt is " + y);
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Epic Fail");
+                    }
+
+                    var getUsersWithMatchingID = ParseObject.GetQuery("User").WhereEqualTo("Username", shUserID);
+
+                    ParseObject currentUser = await getUsersWithMatchingID.FirstOrDefaultAsync();
+                    var x = 1 + 2;
+                    var nwLat = currentUser.Get<double>("NWLat");
+                    var nwLong = currentUser.Get<double>("NWLong");
+                    var seLat = currentUser.Get<double>("SELat");
+                    var seLong = currentUser.Get<double>("SELong");
+
+
+                    //new GeoCoordinate(54.58370919, -5.9322165), new GeoCoordinate(54.583709199999994, -5.9322165)
+                    LocationRectangle geoFence;
+                    geoFence = new LocationRectangle(new GeoCoordinate(nwLat, nwLong), new GeoCoordinate(seLat, seLong));
+                    var insideBoundary = Locater.UserInGeoFence(geoFence, deviceLoc);
+
+                    if (!insideBoundary)
+                    {
+                        currentUser["withinBoundary"] = false;
+
                         var soundFileByteStream = SoundRecorder.Record();
                         var SHSoundFileTime = string.Format("SHBSoudFile{0}.wav", DateTime.Now.ToFileTime());
                         ParseFile soundFile = new ParseFile(SHSoundFileTime, soundFileByteStream);
@@ -96,19 +122,19 @@ namespace TrackingAgent
                         currentUser[SHSoundFile] = soundFile;
                         Console.WriteLine("Recordered the soundfile and svaed it as a parse file and uploaded it");
                     }
-                    SoundRecorder.RecordCounter++;
+                    else
+                    {
+                        Console.WriteLine("User is inside the bounds");
+                    }
+
+
+                    ParseGeoPoint parseDeviceLoc = new ParseGeoPoint(deviceLoc.Coordinate.Latitude, deviceLoc.Coordinate.Longitude);
+                    currentUser["currentLoc"] = parseDeviceLoc;
+
+                    await currentUser.SaveAsync();
+                    Console.WriteLine("Saved the updated user that is outside the bounds to Parse");
                 }
-                else
-                {
-                    Console.WriteLine("User is inside the bounds");
-                }
-
-
-                ParseGeoPoint parseDeviceLoc = new ParseGeoPoint(deviceLoc.Coordinate.Latitude, deviceLoc.Coordinate.Longitude);
-                currentUser["currentLoc"] = parseDeviceLoc;
-
-                await currentUser.SaveAsync();
-                Console.WriteLine("Saved the updated user that is outside the bounds to Parse");
+                
             }
 
 

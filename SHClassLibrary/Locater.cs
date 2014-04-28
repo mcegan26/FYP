@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Windows.Devices.Geolocation;
 using System.IO.IsolatedStorage;
 using System.Reflection;
@@ -14,11 +15,7 @@ namespace SHClassLibrary
     {
         public static async Task<Geoposition> GetDeviceLoc()
         {
-            // The user has opted out of Location posistioning
-            if (!(bool)IsolatedStorageSettings.ApplicationSettings["LocationConsent"])
-            {
-                return null;
-            }
+            Locater.AllowDeviceLocation();
 
             var geolocator = new Geolocator
             {
@@ -121,6 +118,28 @@ namespace SHClassLibrary
             //}
 
             return (insideLat && insideLong);
+        }
+
+        public static void AllowDeviceLocation()
+        {
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("LocationConsent"))
+            {
+                // User has opted out of Location
+                if ((bool)IsolatedStorageSettings.ApplicationSettings["LocationConsent"] == false)
+                    return;
+            }
+            else
+            {
+                // TODO Provide a way of doing this within MVVM
+                MessageBoxResult result =
+                    MessageBox.Show("This app accesses your phone's location. Is that ok?",
+                    "Location",
+                    MessageBoxButton.OKCancel);
+
+                var isOK = (result == MessageBoxResult.OK);
+                IsolatedStorageSettings.ApplicationSettings["LocationConsent"] = isOK;
+                IsolatedStorageSettings.ApplicationSettings.Save();
+            }
         }
     }
 }
