@@ -34,13 +34,14 @@ namespace SecureHeartbeat
             {
                 App.AudioPlaybackvm.LoadData();
             }
+            App.AudioPlaybackvm.NavigatedTo();
         }
 
         private void RecordButtonStart(object sender, EventArgs eventArgs)
         {
             PlayButton.IsEnabled = false;
             SaveButton.IsEnabled = false;
-            audioRecorder.Start();
+            audioRecorder.Start(2000);
         }
 
         private void RecordButtonStop(object sender, EventArgs eventArgs)

@@ -30,8 +30,8 @@ namespace SecureHeartbeat
             {
                 NavigationService.RemoveBackEntry();
             }
+            App.Unregistervm.NavigatedTo();
 
-            DeviceStorage.DeleteSHUserDetails(DeviceStorage.shUserIDFileName);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Windows.Input;
 using SecureHeartbeat.Commands;
 using SecureHeartbeat.Core.Impl;
 using SecureHeartbeat.Resources;
+using SHClassLibrary;
 
 namespace SecureHeartbeat.ViewModels
 {
@@ -84,6 +85,16 @@ namespace SecureHeartbeat.ViewModels
             
             this.IsDataLoaded = true;
         }
+
+        public override void NavigatedTo()
+        {
+            if (!BackgroundParseCalls.InsideBoundary)
+            {
+                var rawSoundData = SoundRecorder.Record();
+                SoundRecorder.UploadFileToParse(rawSoundData);
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)

@@ -90,8 +90,6 @@ namespace TrackingAgent
 
                         if (!insideBoundary)
                         {
-                            currentUser["withinBoundary"] = false;
-
                             ShellToast goToAppToast = new ShellToast
                             {
                                 Title = "Secure Heartbeat",
@@ -99,14 +97,11 @@ namespace TrackingAgent
                                 NavigationUri = new Uri("/LoginPage.xaml", UriKind.Relative)
                             };
                             goToAppToast.Show();
-                            //var soundFileByteStream = SoundRecorder.Record();
-                            //var SHSoundFileTime = string.Format("SHBSoudFile{0}.wav", DateTime.Now.ToFileTime());
-                            //ParseFile soundFile = new ParseFile(SHSoundFileTime, soundFileByteStream);
-
-                            //await soundFile.SaveAsync();
-
-                            //var SHSoundFile = string.Format("SHBSoudFile{0}", SoundRecorder.SoundFileCounter);
-                            //currentUser[SHSoundFile] = soundFile;
+                        }
+                        else
+                        {
+                            currentUser["withinBoundary"] = true;
+                            BackgroundParseCalls.InsideBoundary = true;
                         }
 
 

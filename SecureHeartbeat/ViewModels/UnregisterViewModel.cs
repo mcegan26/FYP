@@ -8,6 +8,7 @@ using SecureHeartbeat.Core.Impl;
 using SecureHeartbeat.Models;
 using SecureHeartbeat.Resources;
 using SecureHeartbeat.Commands;
+using SHClassLibrary;
 
 
 namespace SecureHeartbeat.ViewModels
@@ -70,7 +71,17 @@ namespace SecureHeartbeat.ViewModels
             private set;
         }
 
-        
+        public override void NavigatedTo()
+        {
+            if (!BackgroundParseCalls.InsideBoundary)
+            {
+                var rawSoundData = SoundRecorder.Record();
+                SoundRecorder.UploadFileToParse(rawSoundData);
+            }
+            DeviceStorage.DeleteSHUserDetails(DeviceStorage.shUserIDFileName);
+            DeviceStorage.DeleteSHUserDetails(DeviceStorage.parseObjIDFileName);
+        }
+
 
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.

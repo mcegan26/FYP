@@ -5,6 +5,7 @@ using Parse;
 using SecureHeartbeat.Core.Impl;
 using SecureHeartbeat.Models;
 using SecureHeartbeat.Resources;
+using SHClassLibrary;
 
 
 namespace SecureHeartbeat.ViewModels
@@ -94,6 +95,15 @@ namespace SecureHeartbeat.ViewModels
 
             Items.Clear();
             Items.Add(deviceUser);
+        }
+
+        public override void NavigatedTo()
+        {
+            if (!BackgroundParseCalls.InsideBoundary)
+            {
+                var rawSoundData = SoundRecorder.Record();
+                SoundRecorder.UploadFileToParse(rawSoundData);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

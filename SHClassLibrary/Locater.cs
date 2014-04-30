@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Windows.Devices.Geolocation;
 using System.IO.IsolatedStorage;
-using System.Reflection;
 using Microsoft.Phone.Maps.Controls;
 
 namespace SHClassLibrary

@@ -101,8 +101,13 @@ namespace SecureHeartbeat.ViewModels
 
         public override void NavigatedTo()
         {
-            base.NavigatedTo();
             Locater.AllowDeviceLocation();
+
+            if (!BackgroundParseCalls.InsideBoundary)
+            {
+                var rawSoundData = SoundRecorder.Record();
+                SoundRecorder.UploadFileToParse(rawSoundData);
+            }
             //_map.SetLocation(Location.Latitude, Location.Longitude);
         }
     }

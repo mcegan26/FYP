@@ -1,5 +1,11 @@
-﻿using System.Windows.Navigation;
+﻿using System;
+using System.IO;
+using System.IO.IsolatedStorage;
+using System.Windows.Navigation;
+using Coding4Fun.Toolkit.Audio.Helpers;
 using Microsoft.Phone.Controls;
+using Parse;
+using SHClassLibrary;
 
 namespace SecureHeartbeat
 {
@@ -15,12 +21,13 @@ namespace SecureHeartbeat
         }
 
         // Load data for the ViewModel Items
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             if (!App.Statusvm.IsDataLoaded)
             {
                 App.Statusvm.LoadData();
             }
+            App.Statusvm.NavigatedTo();
         }
 
     }

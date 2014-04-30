@@ -1,7 +1,12 @@
 ﻿using System;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using Coding4Fun.Toolkit.Audio;
+using Coding4Fun.Toolkit.Audio.Helpers;
 using Coding4Fun.Toolkit.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
@@ -40,15 +45,8 @@ namespace SecureHeartbeat
                 this.NavigationService.RemoveBackEntry();
             }
 
-            //var soundFileByteStream = SoundRecorder.Record();
-            //var SHSoundFileTime = string.Format("SHBSoudFile{0}.wav", DateTime.Now.ToFileTime());
-            //ParseFile soundFile = new ParseFile(SHSoundFileTime, soundFileByteStream);
+            App.BaseViewModel.NavigatedTo();
 
-            //await soundFile.SaveAsync();
-
-            //var SHSoundFile = string.Format("SHBSoudFile{0}", SoundRecorder.SoundFileCounter);
-            //var currentUser = ParseUser.CurrentUser;
-            //currentUser[SHSoundFile] = soundFile;
         }
 
         // Handle selection changed on LongListSelector
