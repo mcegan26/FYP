@@ -16,24 +16,19 @@ namespace SecureHeartbeat
 
         public LocationPage()
         {
-            InitializeComponent();// Set the data context of the LongListSelector control to the sample data4
+            InitializeComponent();
 
             var viewModel = new LocationViewModel(new BingMapAdapter(SHBMap));
         
             _viewModel = viewModel;
             DataContext = viewModel;
-
-            // Sample code to localize the ApplicationBar
-            //BuildLocalizedApplicationBar();
         }
 
         // Load data for the ViewModel Items
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
            _viewModel.NavigatedTo();
-
-
-            Map map = SHBMap;
+           //Map map = SHBMap;
         }
     }
 }

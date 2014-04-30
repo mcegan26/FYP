@@ -9,6 +9,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Parse;
+using SecureHeartbeat.Commands;
 
 namespace SecureHeartbeat
 {
@@ -32,6 +33,7 @@ namespace SecureHeartbeat
                 {
                     App.Loginvm.LoadData();
                 }
+                
             }
             else
             {

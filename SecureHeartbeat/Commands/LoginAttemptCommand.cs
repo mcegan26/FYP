@@ -44,7 +44,9 @@ namespace SecureHeartbeat.Commands
                     phoneApplicationFrame.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
                 }
                 App.LoggedIn = true;
-                DeviceStorage.SaveSHUser(_loginModel.Username);
+                DeviceStorage.SaveSHUserDetails(DeviceStorage.shUserIDFileName, _loginModel.Username);
+                var userParseObjID = ParseUser.CurrentUser.ObjectId;
+                DeviceStorage.SaveSHUserDetails(DeviceStorage.parseObjIDFileName, userParseObjID);
             }
             catch (Exception e)
             {

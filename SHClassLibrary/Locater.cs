@@ -15,7 +15,7 @@ namespace SHClassLibrary
     {
         public static async Task<Geoposition> GetDeviceLoc()
         {
-            Locater.AllowDeviceLocation();
+            AllowDeviceLocation();
 
             var geolocator = new Geolocator
             {
@@ -25,8 +25,8 @@ namespace SHClassLibrary
             try
             {
                 var geoposition = await geolocator.GetGeopositionAsync(
-                maximumAge: TimeSpan.FromSeconds(22),
-                timeout: TimeSpan.FromSeconds(16)
+                maximumAge: TimeSpan.FromSeconds(80),
+                timeout: TimeSpan.FromSeconds(50)
                 );
 
                 return geoposition;

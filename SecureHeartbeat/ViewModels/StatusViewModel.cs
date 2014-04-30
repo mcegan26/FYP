@@ -92,11 +92,8 @@ namespace SecureHeartbeat.ViewModels
                 deviceUser.WithinBoundary = "No";
             }
 
-            this.Items.Clear();
-            this.Items.Add(deviceUser);
-           
-
-            this.IsDataLoaded = true;
+            Items.Clear();
+            Items.Add(deviceUser);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

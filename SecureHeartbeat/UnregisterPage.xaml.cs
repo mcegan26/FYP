@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
+using SHClassLibrary;
 
 namespace SecureHeartbeat
 {
@@ -23,11 +24,14 @@ namespace SecureHeartbeat
                 App.Unregistervm.LoadData();
             }
 
+            App.LoggedIn = false;
             var lastPage = NavigationService.BackStack.FirstOrDefault();
             if (lastPage != null && lastPage.Source.ToString().Contains("/MainPage.xaml"))
             {
-                this.NavigationService.RemoveBackEntry();
+                NavigationService.RemoveBackEntry();
             }
+
+            DeviceStorage.DeleteSHUserDetails(DeviceStorage.shUserIDFileName);
         }
     }
 }

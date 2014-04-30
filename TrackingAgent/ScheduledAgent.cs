@@ -2,9 +2,12 @@
 using System.Device.Location;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Media;
+using Microsoft.Phone.BackgroundAudio;
 using Microsoft.Phone.Maps.Controls;
 using Microsoft.Phone.Scheduler;
 using System;
+using Microsoft.Phone.Shell;
 using Parse;
 using SHClassLibrary;
 
@@ -17,6 +20,7 @@ namespace TrackingAgent
         /// </remarks>
         static ScheduledAgent()
         {
+            ParseClient.Initialize("JO4tBIiydFtLJ8zjDFg10Km8YS84a2WqgC8hUiQ3", "y2dLvFgBeyzt89pv9gLtJBaZlsMn7jiZfIty5Ufb");
             // Subscribe to the managed exception handler
             Deployment.Current.Dispatcher.BeginInvoke(delegate
             {
@@ -45,7 +49,7 @@ namespace TrackingAgent
         /// </remarks>
         protected override async void OnInvoke(ScheduledTask task)
         {
-            ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(60));
+            // ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(120));
             //TODO: Add code to perform your task in background
             // Possibilty to double the time interval is preformed and binary state
             
@@ -56,88 +60,66 @@ namespace TrackingAgent
             // If outside boundary record sound for 5 seconds and save to phone
             // Upload sound wave to user's parse record and update the user's loc in parse
 
-            var deviceLoc = await Locater.GetDeviceLoc();
-
-            if (!deviceLoc.Equals(null))
+            
+            var shUserParseObjID = DeviceStorage.ReadSHUserDetails(DeviceStorage.parseObjIDFileName);
+            var shUserID = DeviceStorage.ReadSHUserDetails(DeviceStorage.shUserIDFileName);
+                
+            if (!shUserParseObjID.Equals(""))
             {
-                var shUserID = DeviceStorage.ReadSHUser();
-                if (!shUserID.Equals(""))
+                var deviceLoc = await Locater.GetDeviceLoc();
+
+                if (deviceLoc != null)
                 {
-                    //var getUsersWithMatchingID = from user in ParseObject.GetQuery("User")
-                    //                             where user.Get<String>("username") == shUserID
-                    //                             select user;
+                    var userQuery = ParseUser.Query.Where(user => user.Get<string>("username") == shUserID);
+                    var currentUser1 = await userQuery.FirstOrDefaultAsync();
 
-                    //var query = ParseObject.GetQuery("GameScore").WhereEqualTo("playerName", "Dan Stemkoski");
-                    //IEnumerable<ParseObject> results = await query.FindAsync();
-
-                    if (ParseUser.CurrentUser != null)
+                    ParseObject currentUser = currentUser1;
+                    if (currentUser != null)
                     {
-                        var u = ParseUser.CurrentUser.Get<double>("NWLat");
-                        Console.WriteLine(u);
+                        var nwLat = currentUser.Get<double>("NWLat");
+                        var nwLong = currentUser.Get<double>("NWLong");
+                        var seLat = currentUser.Get<double>("SELat");
+                        var seLong = currentUser.Get<double>("SELong");
+
+
+                        //new GeoCoordinate(54.58370919, -5.9322165), new GeoCoordinate(54.583709199999994, -5.9322165)
+                        LocationRectangle geoFence;
+                        geoFence = new LocationRectangle(new GeoCoordinate(nwLat, nwLong),
+                            new GeoCoordinate(seLat, seLong));
+                        var insideBoundary = Locater.UserInGeoFence(geoFence, deviceLoc);
+
+                        if (!insideBoundary)
+                        {
+                            currentUser["withinBoundary"] = false;
+
+                            ShellToast goToAppToast = new ShellToast
+                            {
+                                Title = "Secure Heartbeat",
+                                Content = "Device Extracted From GeoFence",
+                                NavigationUri = new Uri("/LoginPage.xaml", UriKind.Relative)
+                            };
+                            goToAppToast.Show();
+                            //var soundFileByteStream = SoundRecorder.Record();
+                            //var SHSoundFileTime = string.Format("SHBSoudFile{0}.wav", DateTime.Now.ToFileTime());
+                            //ParseFile soundFile = new ParseFile(SHSoundFileTime, soundFileByteStream);
+
+                            //await soundFile.SaveAsync();
+
+                            //var SHSoundFile = string.Format("SHBSoudFile{0}", SoundRecorder.SoundFileCounter);
+                            //currentUser[SHSoundFile] = soundFile;
+                        }
+
+
+                        ParseGeoPoint parseDeviceLoc = new ParseGeoPoint(deviceLoc.Coordinate.Latitude,
+                            deviceLoc.Coordinate.Longitude);
+                        currentUser["currentLoc"] = parseDeviceLoc;
+
+                        await currentUser.SaveAsync();
+                        Console.WriteLine("Saved the updated user that is outside the bounds to Parse");
                     }
-                    else
-                    {
-                        // show the signup or login screen
-                    }
-
-
-                    try
-                    {
-                        var getUsersWithMatchingID1 = ParseUser.GetQuery("User").WhereEqualTo("Username", shUserID);
-                        var currentUser1 = await getUsersWithMatchingID1.FirstOrDefaultAsync();
-                        var y = currentUser1.Get<double>("NWLat");
-                        Console.WriteLine("OMGee the NW LAt is " + y);
-                    }
-                    catch (Exception)
-                    {
-                        Console.WriteLine("Epic Fail");
-                    }
-
-                    var getUsersWithMatchingID = ParseObject.GetQuery("User").WhereEqualTo("Username", shUserID);
-
-                    ParseObject currentUser = await getUsersWithMatchingID.FirstOrDefaultAsync();
-                    var x = 1 + 2;
-                    var nwLat = currentUser.Get<double>("NWLat");
-                    var nwLong = currentUser.Get<double>("NWLong");
-                    var seLat = currentUser.Get<double>("SELat");
-                    var seLong = currentUser.Get<double>("SELong");
-
-
-                    //new GeoCoordinate(54.58370919, -5.9322165), new GeoCoordinate(54.583709199999994, -5.9322165)
-                    LocationRectangle geoFence;
-                    geoFence = new LocationRectangle(new GeoCoordinate(nwLat, nwLong), new GeoCoordinate(seLat, seLong));
-                    var insideBoundary = Locater.UserInGeoFence(geoFence, deviceLoc);
-
-                    if (!insideBoundary)
-                    {
-                        currentUser["withinBoundary"] = false;
-
-                        var soundFileByteStream = SoundRecorder.Record();
-                        var SHSoundFileTime = string.Format("SHBSoudFile{0}.wav", DateTime.Now.ToFileTime());
-                        ParseFile soundFile = new ParseFile(SHSoundFileTime, soundFileByteStream);
-
-                        await soundFile.SaveAsync();
-
-                        var SHSoundFile = string.Format("SHBSoudFile{0}", SoundRecorder.SoundFileCounter);
-                        currentUser[SHSoundFile] = soundFile;
-                        Console.WriteLine("Recordered the soundfile and svaed it as a parse file and uploaded it");
-                    }
-                    else
-                    {
-                        Console.WriteLine("User is inside the bounds");
-                    }
-
-
-                    ParseGeoPoint parseDeviceLoc = new ParseGeoPoint(deviceLoc.Coordinate.Latitude, deviceLoc.Coordinate.Longitude);
-                    currentUser["currentLoc"] = parseDeviceLoc;
-
-                    await currentUser.SaveAsync();
-                    Console.WriteLine("Saved the updated user that is outside the bounds to Parse");
                 }
                 
             }
-
-
             Console.WriteLine("Completed periodic task");
             NotifyComplete();
         }

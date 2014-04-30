@@ -125,12 +125,6 @@ namespace SecureHeartbeat.ViewModels
             this.IsDataLoaded = true;
         }
 
-        public override void NavigatedTo()
-        {
-            Locater.AllowDeviceLocation();
-        }
-
-    
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)

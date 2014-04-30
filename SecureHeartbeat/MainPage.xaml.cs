@@ -27,7 +27,7 @@ namespace SecureHeartbeat
         }
 
         // Load data for the ViewModel Items
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             if (!App.BaseViewModel.IsDataLoaded)
             {
@@ -39,6 +39,16 @@ namespace SecureHeartbeat
             {
                 this.NavigationService.RemoveBackEntry();
             }
+
+            //var soundFileByteStream = SoundRecorder.Record();
+            //var SHSoundFileTime = string.Format("SHBSoudFile{0}.wav", DateTime.Now.ToFileTime());
+            //ParseFile soundFile = new ParseFile(SHSoundFileTime, soundFileByteStream);
+
+            //await soundFile.SaveAsync();
+
+            //var SHSoundFile = string.Format("SHBSoudFile{0}", SoundRecorder.SoundFileCounter);
+            //var currentUser = ParseUser.CurrentUser;
+            //currentUser[SHSoundFile] = soundFile;
         }
 
         // Handle selection changed on LongListSelector
