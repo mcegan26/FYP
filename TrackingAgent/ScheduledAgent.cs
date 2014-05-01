@@ -61,10 +61,9 @@ namespace TrackingAgent
             // Upload sound wave to user's parse record and update the user's loc in parse
 
             
-            var shUserParseObjID = DeviceStorage.ReadSHUserDetails(DeviceStorage.parseObjIDFileName);
             var shUserID = DeviceStorage.ReadSHUserDetails(DeviceStorage.shUserIDFileName);
                 
-            if (!shUserParseObjID.Equals(""))
+            if (!shUserID.Equals(""))
             {
                 var deviceLoc = await Locater.GetDeviceLoc();
 
@@ -90,6 +89,8 @@ namespace TrackingAgent
 
                         if (!insideBoundary)
                         {
+                            currentUser["withinBoundary"] = false;
+                            DeviceStorage.SaveSHUserDetails(DeviceStorage.shUserWithinBoundary, "false");
                             ShellToast goToAppToast = new ShellToast
                             {
                                 Title = "Secure Heartbeat",
@@ -97,11 +98,12 @@ namespace TrackingAgent
                                 NavigationUri = new Uri("/LoginPage.xaml", UriKind.Relative)
                             };
                             goToAppToast.Show();
+
                         }
                         else
                         {
                             currentUser["withinBoundary"] = true;
-                            BackgroundParseCalls.InsideBoundary = true;
+                            DeviceStorage.SaveSHUserDetails(DeviceStorage.shUserWithinBoundary, "true");
                         }
 
 
@@ -110,12 +112,10 @@ namespace TrackingAgent
                         currentUser["currentLoc"] = parseDeviceLoc;
 
                         await currentUser.SaveAsync();
-                        Console.WriteLine("Saved the updated user that is outside the bounds to Parse");
                     }
                 }
                 
             }
-            Console.WriteLine("Completed periodic task");
             NotifyComplete();
         }
     }

@@ -99,11 +99,7 @@ namespace SecureHeartbeat.ViewModels
 
         public override void NavigatedTo()
         {
-            if (!BackgroundParseCalls.InsideBoundary)
-            {
-                var rawSoundData = SoundRecorder.Record();
-                SoundRecorder.UploadFileToParse(rawSoundData);
-            }
+            DeviceStorage.CheckNeedToSaveRecording();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

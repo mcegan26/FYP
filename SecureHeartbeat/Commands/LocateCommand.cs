@@ -9,6 +9,7 @@ using Microsoft.Phone.Maps.Services;
 using Parse;
 using SecureHeartbeat.Maps;
 using SecureHeartbeat.Models;
+using SHClassLibrary;
 
 
 namespace SecureHeartbeat.Commands
@@ -85,7 +86,11 @@ namespace SecureHeartbeat.Commands
                 // pointer exception to stop app from crashing but issue handled above for actual exception
             }
 
+
+
             _map.SetLocation(geoposition.Coordinate.Latitude, geoposition.Coordinate.Longitude);
+
+            BackgroundParseCalls.DeviceInsideFortress(geoposition);
 
         }
     }

@@ -7,6 +7,7 @@ using Coding4Fun.Toolkit.Audio;
 using Coding4Fun.Toolkit.Audio.Helpers;
 using Microsoft.Phone.Controls;
 using SecureHeartbeat.Commands;
+using SHClassLibrary;
 
 namespace SecureHeartbeat
 {
@@ -14,7 +15,7 @@ namespace SecureHeartbeat
     {
         private IsolatedStorageFileStream soundData;
         private String soundFileName ="SHBsoundfile.wav";
-        private MicrophoneRecorder audioRecorder = new MicrophoneRecorder();
+        //private MicrophoneRecorder audioRecorder = new MicrophoneRecorder();
         private Commands.PlaybackCommand playbackCommand = new PlaybackCommand();
         
         public AudioPlaybackPage()
@@ -41,40 +42,46 @@ namespace SecureHeartbeat
         {
             PlayButton.IsEnabled = false;
             SaveButton.IsEnabled = false;
-            audioRecorder.Start(2000);
+            SoundRecorder.audioRecorder.Stop();
+            SoundRecorder.audioRecorder.Start(10000);
         }
 
         private void RecordButtonStop(object sender, EventArgs eventArgs)
         {
-            audioRecorder.Stop();
-            saveAudioRecording(audioRecorder.Buffer);
+            SoundRecorder.audioRecorder.Stop();
+            SoundRecorder.SaveRecording(SoundRecorder.audioRecorder.Buffer, SoundRecordingPlayer);
+            //saveAudioRecording(SoundRecorder.audioRecorder.Buffer);
             PlayButton.IsEnabled = true;
             SaveButton.IsEnabled = true;  
         }
 
         private void saveAudioRecording(MemoryStream memoryAudioBuffer)
         {
-            if (memoryAudioBuffer == null)
-                throw new ArgumentNullException("No sound file is in the buffer to save.");
-
-            if (soundData != null)
+            if (memoryAudioBuffer != null)
             {
-                SoundRecordingPlayer.Stop();
-                SoundRecordingPlayer.Source = null;
-                soundData.Dispose();
+                //if (soundData != null)
+                //{
+                //    SoundRecordingPlayer.Stop();
+                //    SoundRecordingPlayer.Source = null;
+                //    soundData.Dispose();
+                //}
+
+                //SoundRecorder.SaveRecording(memoryAudioBuffer, SoundRecordingPlayer);
+                //SoundRecorder.UploadFileToParse(rawSoundData);
+
+                //soundFileName = string.Format("SHBSoudFile{0}.wav", DateTime.Now.ToFileTime());
+                //var rawSoundData = memoryAudioBuffer.GetWavAsByteArray(audioRecorder.SampleRate);
+
+                //using (IsolatedStorageFile deviceStorage = IsolatedStorageFile.GetUserStoreForApplication())
+                //{
+                //    soundData = deviceStorage.CreateFile(soundFileName);
+                //    soundData.Write(rawSoundData, 0, rawSoundData.Length);
+
+                //    SoundRecordingPlayer.SetSource(soundData);
+                //}
             }
 
-            // TODO Save to parse with user details
-            soundFileName = string.Format("SHBSoudFile{0}.wav", DateTime.Now.ToFileTime());
-            var rawSoundData = memoryAudioBuffer.GetWavAsByteArray(audioRecorder.SampleRate);
-
-            using (IsolatedStorageFile isoSoundFile = IsolatedStorageFile.GetUserStoreForApplication())
-            {
-                soundData = isoSoundFile.CreateFile(soundFileName);
-                soundData.Write(rawSoundData, 0, rawSoundData.Length);
-
-                SoundRecordingPlayer.SetSource(soundData);
-            }
+            
 
         }
 
@@ -82,6 +89,17 @@ namespace SecureHeartbeat
         private void PlaySoundFile(object sender, RoutedEventArgs e)
         {
             SoundRecordingPlayer.Play();
+        }
+
+        private void UploadToSever(object sender, RoutedEventArgs e)
+        {
+            PlayButton.IsEnabled = false;
+            RecordButton.IsEnabled = false;
+            SoundRecorder.audioRecorder.Stop();
+            var rawSoundData = SoundRecorder.audioRecorder.Buffer.GetWavAsByteArray(SoundRecorder.audioRecorder.SampleRate);
+            SoundRecorder.UploadFileToParse(rawSoundData);
+            PlayButton.IsEnabled = true;
+            RecordButton.IsEnabled = true;
         }
     }
 }

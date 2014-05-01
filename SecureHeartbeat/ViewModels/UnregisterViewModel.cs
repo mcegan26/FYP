@@ -73,13 +73,10 @@ namespace SecureHeartbeat.ViewModels
 
         public override void NavigatedTo()
         {
-            if (!BackgroundParseCalls.InsideBoundary)
-            {
-                var rawSoundData = SoundRecorder.Record();
-                SoundRecorder.UploadFileToParse(rawSoundData);
-            }
+            DeviceStorage.CheckNeedToSaveRecording();
             DeviceStorage.DeleteSHUserDetails(DeviceStorage.shUserIDFileName);
             DeviceStorage.DeleteSHUserDetails(DeviceStorage.parseObjIDFileName);
+            DeviceStorage.DeleteSHUserDetails(DeviceStorage.shUserWithinBoundary);
         }
 
 

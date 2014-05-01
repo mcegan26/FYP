@@ -102,12 +102,7 @@ namespace SecureHeartbeat.ViewModels
         public override void NavigatedTo()
         {
             Locater.AllowDeviceLocation();
-
-            if (!BackgroundParseCalls.InsideBoundary)
-            {
-                var rawSoundData = SoundRecorder.Record();
-                SoundRecorder.UploadFileToParse(rawSoundData);
-            }
+            DeviceStorage.CheckNeedToSaveRecording();
             //_map.SetLocation(Location.Latitude, Location.Longitude);
         }
     }

@@ -80,12 +80,7 @@ namespace SecureHeartbeat.ViewModels
 
         public override void NavigatedTo()
         {
-            BackgroundParseCalls.DeviceInsideBoundary();
-            if (!BackgroundParseCalls.InsideBoundary)
-            {
-                SoundRecorder.StartRecord();
-            }
-
+            DeviceStorage.CheckNeedToRecord();
         }
 
 

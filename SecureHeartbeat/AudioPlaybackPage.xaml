@@ -45,7 +45,7 @@
                     <DataTemplate>-->
             <StackPanel Margin="0,0,0,17" Orientation="Vertical">
                 <ToggleButton x:Name="RecordButton"
-                                Content="Record" 
+                                Content="Record Voice Print" 
                                 Background="{StaticResource PhoneBackgroundBrush}" 
                                 MinHeight="110" Width="450" Padding="20" 
                                 FontFamily="Lucida"
@@ -53,7 +53,7 @@
                                 Unchecked="RecordButtonStop"/>
                 <!-- Click="PlaySoundFile" -->
                 <Button x:Name="PlayButton"
-                        Content="Playback"
+                        Content="Playback Sound"
                         IsEnabled="False"
                         Background="{StaticResource PhoneBackgroundBrush}" 
                         MinHeight="110" Width="450" 
@@ -61,10 +61,11 @@
                         Click="PlaySoundFile"/>
                 <Button x:Name="SaveButton"
                         IsEnabled="False"
-                        Content="Save"
+                        Content="Upload To Server"
                         Background="{StaticResource PhoneBackgroundBrush}"
                         MinHeight="110" Width="450" 
-                        Padding="20" FontFamily="Lucida"/>
+                        Padding="20" FontFamily="Lucida"
+                        Click="UploadToSever"/>
             </StackPanel>
 
             <MediaElement Name="SoundRecordingPlayer" AutoPlay="False"/>

@@ -126,7 +126,6 @@ namespace SHClassLibrary
             }
             else
             {
-                // TODO Provide a way of doing this within MVVM
                 MessageBoxResult result =
                     MessageBox.Show("This app accesses your phone's location. Is that ok?",
                     "Location",
@@ -137,5 +136,6 @@ namespace SHClassLibrary
                 IsolatedStorageSettings.ApplicationSettings.Save();
             }
         }
+
     }
 }
