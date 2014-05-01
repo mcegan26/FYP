@@ -42,7 +42,7 @@ namespace SecureHeartbeat.Commands
 
             var geolocator = new Geolocator
             {
-                DesiredAccuracyInMeters = 20
+                DesiredAccuracyInMeters = 10
             };
 
             var geoposition = await geolocator.GetGeopositionAsync(

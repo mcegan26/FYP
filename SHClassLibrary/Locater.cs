@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Windows.Devices.Geolocation;
 using System.IO.IsolatedStorage;
+using Coding4Fun.Toolkit.Controls.Common;
 using Microsoft.Phone.Maps.Controls;
 
 namespace SHClassLibrary
@@ -15,7 +16,7 @@ namespace SHClassLibrary
 
             var geolocator = new Geolocator
             {
-                DesiredAccuracyInMeters = 20
+                DesiredAccuracyInMeters = 10
             };
 
             try
@@ -38,26 +39,27 @@ namespace SHClassLibrary
         {
             double userLat = userLoc.Coordinate.Latitude;
             double userLong = userLoc.Coordinate.Longitude;
-            double nwCornerLat = geoFence.Northeast.Latitude;
-            double seCornerLat = geoFence.Southwest.Latitude;
-            double nwCornerLong = geoFence.Northeast.Longitude;
-            double seCornerLong = geoFence.Southwest.Longitude;
+            double nwCornerLat = geoFence.Northwest.Latitude;
+            double seCornerLat = geoFence.Southeast.Latitude;
+            double nwCornerLong = geoFence.Northwest.Longitude;
+            double seCornerLong = geoFence.Southeast.Longitude;
             bool insideLat = false;
             bool insideLong = false;
 
 
             // Compare the latitude of the user's location to the geofence latitude 
             // taking into account edges cases at the meridan lines
-            if (nwCornerLat >= 0 && seCornerLat <= 0)
+            if (nwCornerLat <= 0 && seCornerLat >= 0)
             {
-                if ((userLat >= nwCornerLat && userLat < 180) || (userLat <= seCornerLat && userLat > -180))
+                if ((userLat <= 0 && userLat <= nwCornerLat && userLat <= seCornerLat) ||
+                    (userLat >= 0 && userLat >= nwCornerLat && userLat >= seCornerLat))
                 {
                     insideLat = true;
                 }
             }
             else
             {
-                if (userLat >= nwCornerLat && userLat <= seCornerLat)
+                if (userLat <= nwCornerLat && userLat >= seCornerLat)
                 {
                     insideLat = true;
                 }
@@ -66,9 +68,10 @@ namespace SHClassLibrary
 
             // Compare the longitude of the user's location to the geofence longitude 
             // taking into account edges cases at the meridan lines
-            if (nwCornerLat >= 0 && seCornerLat <= 0)
+            if (nwCornerLong >= 0 && seCornerLong <= 0)
             {
-                if ((userLong >= nwCornerLong && userLong < 180) || (userLong <= seCornerLong && userLong > -180))
+                if ((userLong <= 0 && userLong <= nwCornerLong && userLong <= seCornerLong) ||
+                    (userLong >= 0 && userLong >= nwCornerLong && userLong >= seCornerLong))
                 {
                     insideLong = true;
                 }

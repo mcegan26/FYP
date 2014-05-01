@@ -2,6 +2,7 @@
 using System.Device.Location;
 using System.Diagnostics;
 using System.IO.IsolatedStorage;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
@@ -320,13 +321,19 @@ namespace SecureHeartbeat
                     App.BaseViewModel.LoadData();
                 }
             }
+
+            BackgroundParseCalls.BackgroundTask();
         }
 
         // Code to execute when the application is deactivated (sent to background)
         // This code will not execute when the application is closing
-        private void Application_Deactivated(object sender, DeactivatedEventArgs e)
+        private async void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
-            DeviceStorage.CheckNeedToSaveRecording();
+            if (!BackgroundParseCalls.InsideBoundary)
+            {
+                var rawSoundData = SoundRecorder.SaveRecording();
+                SoundRecorder.UploadFileToParse(rawSoundData);
+            }
         }
 
         // Code to execute when the application is closing (eg, user hit Back)
