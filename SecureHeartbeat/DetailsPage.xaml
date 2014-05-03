@@ -15,7 +15,13 @@
     shell:SystemTray.IsVisible="True">
 
     <!--Data context is set to sample data above and first item in sample data collection below and LayoutRoot contains the root grid where all other page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent" d:DataContext="{Binding Items[0]}">
+    <Grid x:Name="LayoutRoot" d:DataContext="{Binding Items[0]}">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF326495" Offset="0"/>
+                <GradientStop Color="MintCream" Offset="0.987"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

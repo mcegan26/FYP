@@ -63,7 +63,7 @@ namespace SecureHeartbeat
             switch (selectedPage)
             {
                 case 0:
-                    NavigationService.Navigate(new Uri("/StatusPage.xaml", UriKind.Relative));
+                    NavigationService.Navigate(new Uri("/CameraPage.xaml", UriKind.Relative));
                     break;
                 case 1:
                     NavigationService.Navigate(new Uri("/LocationPage.xaml", UriKind.Relative));

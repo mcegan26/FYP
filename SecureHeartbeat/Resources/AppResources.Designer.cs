@@ -88,6 +88,15 @@ namespace SecureHeartbeat.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Device Loading....
+        /// </summary>
+        public static string CameraPageTitle {
+            get {
+                return ResourceManager.GetString("CameraPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current Location.
         /// </summary>
         public static string LocationPageTitle {

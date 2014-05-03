@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Microsoft.Phone.Controls;
 using SecureHeartbeat.Core.Interfaces;
 
 namespace SecureHeartbeat.Core.Impl
@@ -32,6 +33,24 @@ namespace SecureHeartbeat.Core.Impl
         /// a view model has been navigated to.
         /// </summary>
         public virtual void NavigatedTo()
+        {
+            // By default this implementation will do nothing
+            // Instead extended classes should override this implementation if such functionality is required
+        }
+
+        public virtual void NavigatedFrom()
+        {
+            // By default this implementation will do nothing
+            // Instead extended classes should override this implementation if such functionality is required
+        }
+
+        public virtual void RegisterUIComponent(System.Windows.Controls.Button uiButton)
+        {
+            // By default this implementation will do nothing
+            // Instead extended classes should override this implementation if such functionality is required
+        }
+
+        public virtual void OnOrientationChanged(OrientationChangedEventArgs e)
         {
             // By default this implementation will do nothing
             // Instead extended classes should override this implementation if such functionality is required

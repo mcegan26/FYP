@@ -97,7 +97,7 @@ namespace SecureHeartbeat
             RecordButton.IsEnabled = false;
             SoundRecorder.audioRecorder.Stop();
             var rawSoundData = SoundRecorder.audioRecorder.Buffer.GetWavAsByteArray(SoundRecorder.audioRecorder.SampleRate);
-            SoundRecorder.UploadFileToParse(rawSoundData);
+            SoundRecorder.UploadSoundFileToParse(rawSoundData);
             PlayButton.IsEnabled = true;
             RecordButton.IsEnabled = true;
         }

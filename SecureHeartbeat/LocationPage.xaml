@@ -19,8 +19,13 @@
 
 
     <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="SlateGray">
-
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF326495" Offset="0"/>
+                <GradientStop Color="MintCream" Offset="0.987"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -30,7 +35,7 @@
 
         <!--Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"-->
 
-        <Image Source="Assets/SecureHeartbeat1.jpg" VerticalAlignment="Top" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="3" IsHitTestVisible="False" Stretch="Fill"/>
+        <!--<Image Source="Assets/SecureHeartbeat1.jpg" VerticalAlignment="Top" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="3" IsHitTestVisible="False" Stretch="Fill"/>-->
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="MainMenuStackPanel" Grid.Row="0" Margin="12,17,0,28">

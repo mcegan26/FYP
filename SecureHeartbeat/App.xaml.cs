@@ -322,7 +322,7 @@ namespace SecureHeartbeat
                 }
             }
 
-            BackgroundParseCalls.BackgroundTask();
+            //BackgroundParseCalls.BackgroundTask();
         }
 
         // Code to execute when the application is deactivated (sent to background)
@@ -332,7 +332,7 @@ namespace SecureHeartbeat
             if (!BackgroundParseCalls.InsideBoundary)
             {
                 var rawSoundData = SoundRecorder.SaveRecording();
-                SoundRecorder.UploadFileToParse(rawSoundData);
+                SoundRecorder.UploadSoundFileToParse(rawSoundData);
             }
         }
 

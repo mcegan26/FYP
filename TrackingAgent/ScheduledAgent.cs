@@ -95,7 +95,7 @@ namespace TrackingAgent
                             {
                                 Title = "Secure Heartbeat",
                                 Content = "Device Extracted From GeoFence",
-                                NavigationUri = new Uri("/LoginPage.xaml", UriKind.Relative)
+                                NavigationUri = new Uri("/CameraPage.xaml", UriKind.Relative)
                             };
                             goToAppToast.Show();
 
